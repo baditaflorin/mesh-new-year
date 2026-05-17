@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { createClockSync, type MeshConfig, type YRoom } from "@baditaflorin/mesh-common";
+import {
+  createClockSync,
+  MeshNameInput,
+  type MeshConfig,
+  type YRoom,
+} from "@baditaflorin/mesh-common";
 
 type Props = { room: YRoom | null; config: MeshConfig };
 
@@ -126,11 +131,11 @@ export function Feature({ room, config }: Props) {
     <div className="ny-screen">
       <header className="ny-header">
         <h1>new year, together</h1>
-        <input
+        <MeshNameInput
           className="ny-name"
-          placeholder="your name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={setName}
+          placeholder="your name"
           maxLength={24}
         />
         <p className="ny-status">
