@@ -46,9 +46,16 @@ export function Feature({ room, config }: Props) {
   const [name, setName] = useState(
     () => localStorage.getItem(NAME_KEY(config.storagePrefix)) ?? "",
   );
-  const [tz, setTz] = useState(
-    () => localStorage.getItem(TZ_KEY(config.storagePrefix)) ?? detectTz(),
-  );
+  // Timezone is a PER-DEVICE fact: detect it from the runtime by default, and
+  // only honour the `${prefix}:tz` key as an explicit user override when it is
+  // already present. We must NOT auto-write the detected value back to
+  // localStorage — that key is shared across every tab on this origin, so
+  // persisting each device's detected zone there made the last tab to mount
+  // clobber the others, and on the next render every peer read back the same
+  // (wrong) zone. The result: two peers in genuinely different timezones both
+  // rendered the shared instant in ONE zone, breaking the headline
+  // "everyone hits local 00:00 together" claim. Detect, don't persist.
+  const [tz] = useState(() => localStorage.getItem(TZ_KEY(config.storagePrefix)) || detectTz());
   const [draftLabel, setDraftLabel] = useState("");
   const [draftDate, setDraftDate] = useState("");
   const [, rerender] = useState(0);
@@ -56,9 +63,6 @@ export function Feature({ room, config }: Props) {
   useEffect(() => {
     if (name) localStorage.setItem(NAME_KEY(config.storagePrefix), name);
   }, [name, config.storagePrefix]);
-  useEffect(() => {
-    localStorage.setItem(TZ_KEY(config.storagePrefix), tz);
-  }, [tz, config.storagePrefix]);
 
   const clock = useMemo(() => (room ? createClockSync(room.provider) : null), [room]);
   useEffect(() => () => clock?.destroy(), [clock]);

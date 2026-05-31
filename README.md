@@ -1,7 +1,7 @@
 # mesh-new-year
 
 [![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-new-year-ff5e7a)](https://baditaflorin.github.io/mesh-new-year/)
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-new-year/blob/main/package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-new-year/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 > Synced new-year countdown across timezones — everyone hits local 00:00 together
